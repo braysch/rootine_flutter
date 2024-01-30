@@ -204,9 +204,9 @@ Widget goalItem(Goal goal) {
   // Add the other if conditions similarly...
 
   return Container(
-      decoration: ,
+      decoration: BoxDecoration(),
       color: goal.itemColor as Color,
-      modifier: Modifier.padding(8.0, 8.0, 8.0, 0.0),
+      padding: EdgeInsets.all(8),
       child: Column(
         children: [
           Row(
@@ -216,20 +216,17 @@ Widget goalItem(Goal goal) {
                 children: [
                   Row(
                     children: [
-                      ResponsiveText(
-                        text: goal.name,
-                        fontWeight: FontWeight.bold,
-                        fontSizeRange: FontSizeRange(16.0, 18.0),
+                      Text(
+                        goal.name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                         maxLines: 1,
-                        modifier: Modifier.weight(1.0),
                       ),
-                      AnimatedVisibility(
-                        visible: goal.private,
-                        child: Icon(
+                      Icon(
                           Icons.lock,
                           size: 16.0,
                         ),
-                      ),
                     ],
                   ),
                   Row(
@@ -240,7 +237,7 @@ Widget goalItem(Goal goal) {
                           Text(
                             !goal.time
                                 ? "${goal.progress.toInt()} / ${goal.goal.toInt()} ${goal.units}"
-                                : "${goal.progress.toTime()} / ${goal.goal.toTime()} ${goal.units}",
+                                : "${goal.progress} / ${goal.goal} ${goal.units}",
                           ),
                         ],
                       ),
@@ -250,9 +247,6 @@ Widget goalItem(Goal goal) {
                             "${(goal.totalPercentage * 100).toInt()}%",
                             style: TextStyle(
                               backgroundColor: Colors.white.withOpacity(0.20),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 8.0,
-                              ),
                             ),
                           ),
                         ],
@@ -276,10 +270,10 @@ Widget goalItem(Goal goal) {
                   IconButton(
                     icon: Icon(Icons.more_vert),
                     onPressed: () {
-                      showDropdown.value = true;
+                      //showDropdown.value = true;
                     },
                   ),
-                  DropdownMenu(
+                  /*DropdownMenu(
                     expanded: showDropdown.value,
                     onDismissRequest: () {
                       showDropdown.value = false;
@@ -306,59 +300,43 @@ Widget goalItem(Goal goal) {
                         ),
                       // Add other menu items accordingly...
                     ],
-                  ),
+                  ),*/
                 ],
               ),
             ],
           ),
           LinearProgressIndicator(
-            value: animatedLinearProgress,
+            value: 3,
           ),
-          Surface(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(8.0),
-                bottomRight: Radius.circular(8.0),
-              ),
-            ),
+          Container(
             child: Row(
               children: [
-                Surface(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(8.0),
-                    ),
-                  ),
+                Container(
                   color: goal.targetBoxColor as Color,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("My Progress"),
-                      ClickableText(
-                        text: !goal.time
+                      Text(
+                        !goal.time
                             ? "${goal.progress.toInt()} ${goal.units}"
-                            : "${goal.progress.toTime()}",
+                            : "${goal.progress}",
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
-                        onTap: () {
+                        /*onTap: () {
                           if (goal.time) {
-                            openDialogTime.value = true;
+                            //openDialogTime.value = true;
                           } else {
-                            openDialog.value = true;
+                            //openDialog.value = true;
                           }
-                          scope.launch(() async {
-                            await viewModel.updateGoal(goal);
-                          });
-                        },
+                          // updateGoal
+                        },*/
                       ),
                     ],
                   ),
                 ),
-                Surface(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0.0),
-                  ),
+                Container(
                   color: goal.progressBoxColor as Color,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -367,8 +345,8 @@ Widget goalItem(Goal goal) {
                       Text(
                         goal.state == GoalStates.INPROGRESS
                             ? (!goal.time
-                            ? "${ceil(goal.weeklyGoal).toInt()} ${goal.units}"
-                            : "${goal.weeklyGoal.toTime()}")
+                            ? "${(goal.weeklyGoal).toInt().ceil()} ${goal.units}"
+                            : "${goal.weeklyGoal}")
                             : "---",
                         style: TextStyle(
                           fontSize: 14.0,
@@ -377,26 +355,20 @@ Widget goalItem(Goal goal) {
                     ],
                   ),
                 ),
-                Surface(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(8.0),
-                    ),
-                  ),
+                Container(
                   color: goal.percentageBoxColor as Color,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircularProgressIndicator(
                         value: goal.state != GoalStates.SHELVED &&
-                            !goal.weeklyPercentage.isNaN()
+                            !goal.weeklyPercentage.isNaN
                             ? goal.weeklyPercentage
                             : 0.0,
                         strokeWidth: 20.0,
                         valueColor: AlwaysStoppedAnimation(
                           goal.weeklyProgressColor as Color,
                         ),
-                        radius: 30.0,
                       ),
                       Text(
                         goal.state != GoalStates.SHELVED
@@ -412,36 +384,27 @@ Widget goalItem(Goal goal) {
               ],
             ),
           ),
-          AnimatedVisibility(
-            visible:
-            goal.goalComplete && goal.state != GoalStates.COMPLETE,
-            enter: ExpandVertically(),
-            exit: ShrinkVertically(),
-            child: Row(
+          Row(
               children: [
-                Button(
+                ElevatedButton(
                   onPressed: () {
-                    extendRequest.value = true;
+                    //extendRequest.value = true;
                   },
                   child: Text("Extend"),
                 ),
                 Spacer(),
-                Button(
+                ElevatedButton(
                   onPressed: () {
                     complete();
-                    scope.launch(() async {
-                      await viewModel.updateGoal(goal);
-                    });
+                    // update Goal
                   },
                   child: Text("Complete"),
                 ),
               ],
             ),
-          ),
           SizedBox(height: 8.0),
         ],
       ),
-    ),
   );
 }
 
@@ -463,19 +426,19 @@ String toTime(double value) {
 
 Widget totalTargetLinearProgressBar(double totalPercentage) {
   final imageSize = 16.0;
-  final size = useAnimatedFloatAsState(
+  final size = 1;/*useAnimatedFloatAsState(
     targetValue: totalPercentage,
     duration: 1000,
     delay: 200,
     easing: Curves.linearToEaseOut,
-  );
+  );*/
 
   return Column(
     children: [
       Row(
         children: [
           Spacer(
-            flex: size.value > 0 ? size.value.toInt() : 0,
+            //flex: size.value > 0 ? size.value.toInt() : 0,
           ),
           Row(
             children: [
@@ -490,7 +453,7 @@ Widget totalTargetLinearProgressBar(double totalPercentage) {
             ],
           ),
           Spacer(
-            flex: size.value < 1.0 ? (1.0 - size.value).toInt() : 0,
+            //flex: size.value < 1.0 ? (1.0 - size.value).toInt() : 0,
           ),
         ],
       ),

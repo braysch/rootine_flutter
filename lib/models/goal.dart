@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../util/functions.dart';
+
 class Goal {
   late String identification;
   late String id;
@@ -194,7 +196,7 @@ class Goal {
 
   String validate() {
     return validateProgress() + validateName() + validateUnits() +
-        validateGoal() + validateEndDate() + validateInitialProgress();
+        validateGoal() + /*validateEndDate() +*/ validateInitialProgress();
   }
 
   void setStateToShelved() {
