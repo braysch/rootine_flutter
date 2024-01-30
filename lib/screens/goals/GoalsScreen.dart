@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rootine_flutter_real/viewmodels/GoalsViewModel.dart';
 
-final viewModel = GoalsViewModel();
-GoalsScreenState state = viewModel.uiState;
+import '../../repositories/GoalsManager.dart';
 
+GoalsManager goalsManager = GoalsManager.goalsManager;
 
 class GoalsScreen extends StatefulWidget {
   @override
@@ -31,7 +31,7 @@ class _GoalsScreenState extends State<GoalsScreen> with SingleTickerProviderStat
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("Next milestone in ${state.daysUntilEndOfWeek} days", textAlign: TextAlign.center),
+          Text("Next milestone in ${goalsManager.daysUntilEndOfWeek} days", textAlign: TextAlign.center),
           Tabs(tabController: _tabController),
           TabsContent(tabController: _tabController),
         ],

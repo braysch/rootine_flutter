@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ProjectsScreen extends StatelessWidget {
-  final NavHostController navController;
-
-  ProjectsScreen({required this.navController});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +18,4 @@ class ProjectsScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: ProjectsScreen(navController: NavHostController()),
-  ));
 }

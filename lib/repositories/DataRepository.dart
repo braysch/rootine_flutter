@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uuid/uuid.dart';
-
+/*
 class GoalEssen {
   String userId;
   String identification;
@@ -73,17 +71,22 @@ class GoalEssen {
   }
 }
 
-class DataRepository {
+*/
+/*class DataRepository {
   static Future<void> updateGoal(Rootine goal) async {
     var goalEssen = getGoalEssenFromGoal(goal);
     await FirebaseFirestore.instance.collection("goals").doc(goalEssen.identification).set(goalEssen.toMap());
-  }
+  }*//*
 
-  static Future<void> deleteGoal(String id) async {
+
+*/
+/*  static Future<void> deleteGoal(String id) async {
     await FirebaseFirestore.instance.collection("goals").doc(id).delete();
-  }
+  }*//*
 
-  static Future<void> loadGoals() async {
+
+  */
+/*static Future<void> loadGoals() async {
     var milestone = UserRepository.getMilestone();
     var snapshot = await FirebaseFirestore.instance.collection("goals").where("userId", isEqualTo: UserRepository.getCurrentUserId()).get();
     var goalsEssen = snapshot.docs.map((doc) => GoalEssen.fromMap(doc.data() as Map<String, dynamic>)).toList();
@@ -110,9 +113,11 @@ class DataRepository {
     // update milestone information
 
     // UserRepository.setNumMotivators(numMotivators); // set the number of motivators
-  }
+  }*//*
 
-  static Future<void> loadOtherUserInProgressGoals(User user) async {
+
+  */
+/*static Future<void> loadOtherUserInProgressGoals(User user) async {
     var snapshot = await FirebaseFirestore.instance.collection("goals").where("userId", isEqualTo: user.userId).get();
     var goalsEssen = snapshot.docs.map((doc) => GoalEssen.fromMap(doc.data() as Map<String, dynamic>)).toList();
     RootinesRepository.clearOtherUserGoals();
@@ -136,7 +141,8 @@ class DataRepository {
         }
       }
     }
-  }
+  }*//*
+
 
   static Future<GoalEssen> createGoal({
     required String identification,
@@ -195,4 +201,4 @@ class DataRepository {
       motivators: goal.motivators,
     );
   }
-}
+}*/

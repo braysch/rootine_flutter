@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-Future<void> deleteOrCancelDialog(BuildContext context, Rootine rootine, ValueNotifier<bool> permaDeleteRequest, ValueNotifier<bool> transition) async {
+import '../models/goal.dart';
+
+Future<void> deleteOrCancelDialog(BuildContext context, Goal goal, ValueNotifier<bool> permaDeleteRequest, ValueNotifier<bool> transition) async {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
         title: Column(
           children: [
-            Text("${rootine.name}"),
+            Text("${goal.name}"),
             Text(
               "Once it's gone, it's gone!",
               style: Theme.of(context).textTheme.bodyText2,
@@ -17,7 +19,7 @@ Future<void> deleteOrCancelDialog(BuildContext context, Rootine rootine, ValueNo
         content: Column(
           children: [
             Text(
-              "Are you sure you want to delete ${rootine.name} from your goals?",
+              "Are you sure you want to delete ${goal.name} from your goals?",
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ],
@@ -34,8 +36,8 @@ Future<void> deleteOrCancelDialog(BuildContext context, Rootine rootine, ValueNo
           TextButton(
             onPressed: () async {
               transition.value = true;
-              rootine.delete();
-              await DataRepository.deleteGoal(rootine.identification.toString());
+              goal.delete();
+              //await DataRepository.deleteGoal(goal.identification.toString());
               permaDeleteRequest.value = false;
               Navigator.of(context).pop();
             },

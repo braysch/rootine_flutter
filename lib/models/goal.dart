@@ -163,15 +163,6 @@ class Goal {
     }
   }
 
-  String validateEndDate() {
-    try {
-      endDate = DateTime.parse(endDateString);
-      return endDate.isAfter(DateTime.now()) ? '' : 'End date must be in the future';
-    } catch (e) {
-      return 'Improperly formatted date';
-    }
-  }
-
   String validateStartDate() {
     try {
       startDate = DateTime.parse(startDateString);

@@ -1,26 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:your_package_name_here/viewmodels/goals_view_model.dart'; // Replace with your actual package name
-import 'package:your_package_name_here/components/rootine_item.dart'; // Import your RootineItem widget
 
-class GoalsInProgressScreen extends ConsumerWidget {
+import '../../components/RootineItem.dart';
+import '../../repositories/GoalsManager.dart';
+
+GoalsManager goalsManager = GoalsManager.goalsManager;
+
+class GoalsInProgressScreen {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final viewModel = watch(goalsViewModelProvider);
-    final state = viewModel.uiState;
-
-    useEffect(() {
-      viewModel.getInProgress();
-      viewModel.calculateEndOfWeek(); // and check for milestone
-      viewModel.calculateDaysUntilEndOfWeek();
-      return null;
-    }, const []);
+  Widget build(BuildContext context) {
 
     return Column(
       children: [
         Expanded(
           child: ListView.builder(
-            itemCount: state.inProgress.length,
+            itemCount: GoalsManager.inProgress.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -28,7 +22,7 @@ class GoalsInProgressScreen extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: RootineItem(
-                        rootine: state.inProgress[index],
+                        GoalsManager.inProgress[index],
                       ),
                     ),
                   ],
@@ -39,7 +33,6 @@ class GoalsInProgressScreen extends ConsumerWidget {
         ),
         Positioned(
           bottom: 16.0,
-          end: 16.0,
           child: FloatingActionButton(
             onPressed: () {
               // Navigate to rootinesModificationNavigation route

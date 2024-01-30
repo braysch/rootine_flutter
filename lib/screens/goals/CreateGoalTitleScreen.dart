@@ -1,25 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:your_package_name_here/viewmodels/rootine_modification_view_model.dart'; // Replace with your actual package name
-import 'package:your_package_name_here/util/date_constants.dart'; // Replace with your actual package name
-import 'package:joda_time/joda_time.dart'; // Import the JodaTime package
 
-class CreateGoalTitleScreen extends ConsumerWidget {
+class CreateGoalTitleScreen {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final viewModel = watch(rootineModificationViewModelProvider);
-    final state = viewModel.uiState;
-
-    var name = useState("");
-    var scope = useMemoized(() => ScopedCoroutine());
-
-    useEffect(() {
-      if (state.valid) {
-        state.valid = false;
-        // Go to the next screen
-      }
-      return null;
-    }, [state.valid]);
+  Widget build(BuildContext context) {
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -29,16 +13,16 @@ class CreateGoalTitleScreen extends ConsumerWidget {
         SizedBox(height: 32),
         Text("What are you going to accomplish?"),
         TextField(
-          controller: TextEditingController(text: name.value),
+          controller: TextEditingController(text: "Hello"),
           onChanged: (value) {
-            name.value = value;
+            //name.value = value;
           },
           decoration: InputDecoration(labelText: "Goal Title"),
         ),
         SizedBox(height: 8),
         ElevatedButton(
           onPressed: () {
-            scope.launch(() => viewModel.validateTitle());
+            // validate title;
           },
           style: ElevatedButton.styleFrom(
             fixedSize: Size(double.infinity, 60),
@@ -46,7 +30,7 @@ class CreateGoalTitleScreen extends ConsumerWidget {
           child: Text("Continue"),
         ),
         SizedBox(height: 8),
-        Text(state.errorMessage),
+        Text("Error Message!"),
         Spacer(),
         ElevatedButton(
           onPressed: () {},

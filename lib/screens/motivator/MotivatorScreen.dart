@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../models/goal.dart';
 import '../../navigation/Routes.dart';
 
 class MotivatorScreen extends StatefulWidget {
@@ -13,8 +14,8 @@ class _MotivatorScreenState extends State<MotivatorScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Text("Motivating ${state.user.value.firstName}"),
-          FriendGoalItem(rootine: state.goal.value),
+          //Text("Motivating ${state.user.value.firstName}"),
+          //FriendGoalItem(rootine: state.goal.value),
           Text("SELECT MOTIVATOR"),
           ElevatedButton(
             onPressed: () {
@@ -41,9 +42,9 @@ class _MotivatorScreenState extends State<MotivatorScreen> {
 }
 
 class FriendGoalItem extends StatelessWidget {
-  final Rootine rootine;
+  final Goal goal;
 
-  FriendGoalItem({required this.rootine});
+  FriendGoalItem({required this.goal});
 
   @override
   Widget build(BuildContext context) {

@@ -61,7 +61,7 @@ class UserRepository {
     return milestone;
   }
 
-  static Future<List<String>> getUsernames() async {
+  /*static Future<List<String>> getUsernames() async {
     var usernames = <String>[];
     var snapshot = await FirebaseFirestore.instance.collection("users").get();
     var profiles = snapshot.docs.map((doc) => User.fromMap(doc.data())).toList();
@@ -69,9 +69,9 @@ class UserRepository {
       x.username?.let((it) => usernames.add(it));
     }
     return usernames;
-  }
+  }*/
 
-  static Future<User> getUserByUsername(String username) async {
+  /*static Future<User> getUserByUsername(String username) async {
     var otherUser = User();
     var snapshot = await FirebaseFirestore.instance.collection("users").where("username", isEqualTo: username).get();
     var documents = snapshot.docs;
@@ -80,11 +80,11 @@ class UserRepository {
       otherUser.id = doc.id;
     });
     return otherUser;
-  }
+  }*/
 
-  static Future<void> updateUser(User updatedUser) async {
+  /*static Future<void> updateUser(User updatedUser) async {
     await FirebaseFirestore.instance.collection("users").doc(updatedUser.id!).set(updatedUser.toMap());
-  }
+  }*/
 
   static Future<User> getUser() async {
     return user;
@@ -120,7 +120,7 @@ class UserRepository {
     user.image = image;
   }
 
-  static Future<User> createUser() async {
+  /*static Future<User> createUser() async {
     var doc = FirebaseFirestore.instance.collection("users").doc();
     var newUser = User(
       id: doc.id,
@@ -139,29 +139,29 @@ class UserRepository {
     );
     await doc.set(newUser.toMap());
     return newUser;
-  }
+  }*/
 
-  static Future<void> loginUser(String email, String password) async {
+  /*static Future<void> loginUser(String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       throw SignInException(e.message);
     }
-  }
+  }*/
 
-  static String? getCurrentUserId() {
+  /*static String? getCurrentUserId() {
     return FirebaseAuth.instance.currentUser?.uid;
-  }
+  }*/
 
-  static bool isUserLoggedIn() {
+  /*static bool isUserLoggedIn() {
     return getCurrentUserId() != null;
-  }
+  }*/
 
-  static Future<String> getUserImage(String userId) async {
+  /*static Future<String> getUserImage(String userId) async {
     return "${R.string.profile_images_ref}$userId?alt=media";
-  }
+  }*/
 
-  static Future<User> loadUserInfo() async {
+  /*static Future<User> loadUserInfo() async {
     var snapshot = await FirebaseFirestore.instance.collection("users").where("userId", isEqualTo: getCurrentUserId()).get();
     var documents = snapshot.docs;
     documents.forEach((doc) {
@@ -169,11 +169,11 @@ class UserRepository {
       user.id = doc.id;
     });
     return user;
-  }
+  }*/
 
-  static void signOutUser() {
+  /*static void signOutUser() {
     FirebaseAuth.instance.signOut();
-  }
+  }*/
 
   static void setNumMotivators(int size) {
     numMotivators = size;

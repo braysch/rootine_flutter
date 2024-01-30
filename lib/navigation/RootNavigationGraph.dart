@@ -1,25 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rootine_flutter_real/screens/goals/GoalsScreen.dart';
-
 import '../main.dart';
-import '../screens/friends/FriendsScreen.dart';
 import '../screens/motivator/MotivatorMessageScreen.dart';
 import '../screens/motivator/MotivatorScreen.dart';
-import '../screens/userSetup/ProfilePictureSetupScreen.dart';
 import '../screens/userSetup/UserSetupScreen.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: RootNavigationGraph(),
-    );
-  }
-}
 
 class RootNavigationGraph extends StatelessWidget {
   @override
@@ -39,25 +23,22 @@ class RootNavigationGraph extends StatelessWidget {
   }
 
   Widget _buildScreens(BuildContext context, String route) {
-    final navController = context.read<NavHostController>();
 
     switch (route) {
       case '/launch':
-        return LaunchScreen(navController: navController);
-      case '/main':
-        return MainScreen(navController);
+        return LaunchScreen();
       case '/userSetup':
-        return UserSetupScreen(navController);
-      case '/photo':
-        return ProfilePictureSetupScreen(navController);
-      case '/friends':
-        return FriendsScreen(navController);
+        return UserSetupScreen();
+      //case '/photo':
+        //return ProfilePictureSetupScreen();
+      //case '/friends':
+        //return FriendsScreen();
       case '/motivator':
-        return MotivatorScreen(navController);
+        return MotivatorScreen();
       case '/motivatorMessage':
-        return MotivatorMessageScreen(navController);
-      case '/splashScreen':
-        return SplashScreen(navController);
+        return MotivatorMessageScreen();
+      //case '/splashScreen':
+        //return SplashScreen();
       default:
         return Container(); // Replace with your default screen
     }

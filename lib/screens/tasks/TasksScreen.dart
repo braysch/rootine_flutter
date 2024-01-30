@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class TasksScreen extends StatelessWidget {
-  final NavHostController navController;
-
-  TasksScreen({required this.navController});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +18,4 @@ class TasksScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: TasksScreen(navController: NavHostController()),
-  ));
 }

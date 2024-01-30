@@ -8,10 +8,8 @@ import '../../screens/routines/RoutinesScreen.dart';
 import '../../screens/tasks/TasksScreen.dart';
 
 class BottomNavGraph extends StatelessWidget {
-  final NavHostController navController;
-  final NavHostController navHostController;
 
-  BottomNavGraph({required this.navController, required this.navHostController});
+  BottomNavGraph();
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +34,11 @@ class BottomNavGraph extends StatelessWidget {
       case '/goals':
         return GoalsScreen();
       case '/tasks':
-        return TasksScreen(navController: navController);
+        return TasksScreen();
       case '/routines':
-        return RoutinesScreen(navController: navController);
+        return RoutinesScreen();
       case '/projects':
-        return ProjectsScreen(navController: navController);
+        return ProjectsScreen();
       case '/goalModification':
         return GoalModificationScreen();
       default:

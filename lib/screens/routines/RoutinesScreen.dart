@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class RoutinesScreen extends StatelessWidget {
-  final NavHostController navController;
-
-  RoutinesScreen({required this.navController});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +18,4 @@ class RoutinesScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: RoutinesScreen(navController: NavHostController()),
-  ));
 }

@@ -1,34 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:your_package_name_here/viewmodels/goals_edit_view_model.dart';
-import 'package:your_package_name_here/viewmodels/goals_view_model.dart';
-import 'package:your_package_name_here/models/goal.dart';
-import 'package:your_package_name_here/screens/hour_minute_field.dart';
+import 'package:rootine_flutter_real/util/functions.dart';
+import '../models/goal.dart';
+import '../util/GoalStates.dart';
 
-@OptIn(ExperimentalFoundationApi::class)
-Widget RootineItem(Rootine rootine) {
+Widget goalItem(Goal goal) {
   var linearProgressOffset = 0.0;
-
-  final viewModel = context.read(goalsViewModelProvider);
-  final state = viewModel.uiState;
-
-  final editViewModel = context.read(goalsEditViewModelProvider);
-  final editState = editViewModel.uiState;
-
-  final scope = rememberCoroutineScope();
-
-  final openDialog = useState(false);
-  final openDialogTime = useState(false);
-  final deleteRequest = useState(false);
-  final permaDeleteRequest = useState(false);
-  final extendRequest = useState(false);
-  final renewRequest = useState(false);
-  final transition = useState(false);
-  final progress = useState("");
-  final progressHour = useState("");
-  final progressMinute = useState("");
-  final showDropdown = useState(false);
-  final newGoal = useState(rootine.goalString);
-  final errorMessage = useState("ERROR MESSAGE");
+  var openDialog = false;
+  var openDialogTime = false;
+  var deleteRequest = false;
+  var permaDeleteRequest = false;
+  var extendRequest = false;
+  var renewRequest = false;
+  var transition = false;
+  var progress = "";
+  var progressHour = "";
+  var progressMinute = "";
+  var showDropdown = false;
+  var newGoal = goal.goalString;
+  const errorMessage = "ERROR MESSAGE!";
 
   final imageContent = () {
     return Image(
@@ -39,51 +28,52 @@ Widget RootineItem(Rootine rootine) {
   };
 
   void renew() async {
-    await editViewModel.validateEndDate(editState.inputEndDate);
-    if (rootine.state == GoalStates.SHELVED) {
-      transition.value = true;
-      await viewModel.getInProgress();
-      state.shelvedSize.value -= 1;
-    }
-    rootine.renew(
-      rGoal: editState.goal.value,
+    //await editViewModel.validateEndDate(editState.inputEndDate);
+    /*validateEndDate(inputEndDate);
+    if (goal.state == GoalStates.SHELVED) {
+      //transition.value = true;
+      //await viewModel.getInProgress();
+      //state.shelvedSize.value -= 1;
+    }*/
+    /*goal.renew(
+      goal.value,
       rEndDate: editState.endDate.value,
       rDailyAverage: editState.dailyAverage.value,
-    );
+    );*/
   }
 
   void shelve() {
-    rootine.shelve();
-    transition.value = true;
-    scope.launch(() async {
+    goal.shelve();
+    //transition.value = true;
+   /* scope.launch(() async {
       await viewModel.getShelved();
-    });
-    state.inProgressSize.value -= 1;
+    });*/
+    //state.inProgressSize.value -= 1;
   }
 
   void activate() async {
-    rootine.activate();
-    transition.value = true;
-    await viewModel.getInProgress();
-    state.shelvedSize.value -= 1;
+    goal.activate();
+    //transition.value = true;
+    //await viewModel.getInProgress();
+    //state.shelvedSize.value -= 1;
   }
 
   void complete() {
-    rootine.complete();
-    transition.value = true;
-    scope.launch(() async {
+    goal.complete();
+    //transition.value = true;
+    /*scope.launch(() async {
       await viewModel.getCompleted();
-    });
-    state.inProgressSize.value -= 1;
+    });*/
+    //state.inProgressSize.value -= 1;
   }
 
   void extend() async {
-    if (rootine.state == GoalStates.COMPLETE) {
-      transition.value = true;
-      await viewModel.getInProgress();
-      state.completedSize.value -= 1;
+    if (goal.state == GoalStates.COMPLETE) {
+      //transition.value = true;
+      //await viewModel.getInProgress();
+      //state.completedSize.value -= 1;
     }
-    rootine.extend();
+    goal.extend();
   }
 
   final endYear = DateTime.now().year;
@@ -91,27 +81,27 @@ Widget RootineItem(Rootine rootine) {
   final endDay = DateTime.now().day;
   final endCalendar = DateTime.now();
 
-  if (renewRequest.value) {
-    useEffect(() {
-      editViewModel.renewPopulateValues(
-        goal: rootine.goal,
-        initProgress: rootine.initialProgress,
-        progress: rootine.progress,
-        dailyAverage: rootine.dailyAverage,
-        totalDays: rootine.daysStartDateToEndDate,
-      );
-    }, [true]);
+  if (true) {
+    {
+      /*renewPopulateValues(
+        goal: goal.goal,
+        initProgress: goal.initialProgress,
+        progress: goal.progress,
+        dailyAverage: goal.dailyAverage,
+        totalDays: goal.daysStartDateToEndDate,
+      );*/
+    }
 
-    showDialog(
+    /*showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          onDismissRequest: () {
+          *//*onDismissRequest: () {
             renewRequest.value = false;
-          },
+          },*//*
           title: Column(
             children: [
-              Text("${rootine.name}"),
+              Text("${goal.name}"),
               Text(
                 "Let's get back on track!",
                 style: Theme.of(context).textTheme.bodyText2,
@@ -120,7 +110,7 @@ Widget RootineItem(Rootine rootine) {
           ),
           text: Column(
             children: [
-              Text("Original Goal: ${rootine.goal}"),
+              Text("Original Goal: ${goal.goal}"),
               OutlinedTextField(
                 label: Text("Goal"),
                 value: editState.inputGoal,
@@ -130,7 +120,7 @@ Widget RootineItem(Rootine rootine) {
                     if (await editViewModel.validateGoal(editState.inputGoal)) {
                       await editViewModel.renewalGoalInput(
                         editState.inputGoal,
-                        rootine.progress,
+                        goal.progress,
                       );
                     }
                   });
@@ -144,7 +134,7 @@ Widget RootineItem(Rootine rootine) {
                   scope.launch(() async {
                     await editViewModel.renewalEndDateInput(
                       editState.inputEndDate,
-                      rootine.progress,
+                      goal.progress,
                     );
                   });
                 },
@@ -158,7 +148,7 @@ Widget RootineItem(Rootine rootine) {
                   scope.launch(() async {
                     await editViewModel.renewalDaysInput(
                       editState.inputDaysToEnd,
-                      rootine.progress,
+                      goal.progress,
                     );
                   });
                 },
@@ -172,7 +162,7 @@ Widget RootineItem(Rootine rootine) {
                   scope.launch(() async {
                     await editViewModel.renewalWeeklyAverageInput(
                       editState.inputWeeklyAverage,
-                      rootine.progress,
+                      goal.progress,
                     );
                   });
                 },
@@ -196,7 +186,7 @@ Widget RootineItem(Rootine rootine) {
                     if (await editViewModel.validateRenewal()) {
                       renew();
                       scope.launch(() async {
-                        await viewModel.updateGoal(rootine);
+                        await viewModel.updateGoal(goal);
                       });
                       renewRequest.value = false;
                     }
@@ -208,21 +198,14 @@ Widget RootineItem(Rootine rootine) {
           ),
         );
       },
-    );
+    );*/
   }
 
   // Add the other if conditions similarly...
 
-  return AnimatedVisibility(
-    visible: !transition.value,
-    enter: SlideInHorizontally(),
-    exit: rootine.exitTransition,
-    child: Surface(
-      elevation: 2.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      color: rootine.itemColor as Color,
+  return Container(
+      decoration: ,
+      color: goal.itemColor as Color,
       modifier: Modifier.padding(8.0, 8.0, 8.0, 0.0),
       child: Column(
         children: [
@@ -234,14 +217,14 @@ Widget RootineItem(Rootine rootine) {
                   Row(
                     children: [
                       ResponsiveText(
-                        text: rootine.name,
+                        text: goal.name,
                         fontWeight: FontWeight.bold,
                         fontSizeRange: FontSizeRange(16.0, 18.0),
                         maxLines: 1,
                         modifier: Modifier.weight(1.0),
                       ),
                       AnimatedVisibility(
-                        visible: rootine.private,
+                        visible: goal.private,
                         child: Icon(
                           Icons.lock,
                           size: 16.0,
@@ -255,16 +238,16 @@ Widget RootineItem(Rootine rootine) {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            !rootine.time
-                                ? "${rootine.progress.toInt()} / ${rootine.goal.toInt()} ${rootine.units}"
-                                : "${rootine.progress.toTime()} / ${rootine.goal.toTime()} ${rootine.units}",
+                            !goal.time
+                                ? "${goal.progress.toInt()} / ${goal.goal.toInt()} ${goal.units}"
+                                : "${goal.progress.toTime()} / ${goal.goal.toTime()} ${goal.units}",
                           ),
                         ],
                       ),
                       Column(
                         children: [
                           Text(
-                            "${(rootine.totalPercentage * 100).toInt()}%",
+                            "${(goal.totalPercentage * 100).toInt()}%",
                             style: TextStyle(
                               backgroundColor: Colors.white.withOpacity(0.20),
                               padding: EdgeInsets.symmetric(
@@ -278,8 +261,8 @@ Widget RootineItem(Rootine rootine) {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            rootine.state != GoalStates.SHELVED
-                                ? "Week ${rootine.currentWeek} / ${rootine.totalWeeks}"
+                            goal.state != GoalStates.SHELVED
+                                ? "Week ${goal.currentWeek} / ${goal.totalWeeks}"
                                 : "---",
                           ),
                         ],
@@ -302,22 +285,22 @@ Widget RootineItem(Rootine rootine) {
                       showDropdown.value = false;
                     },
                     items: [
-                      if (rootine.goalComplete &&
-                          rootine.state != GoalStates.COMPLETE)
+                      if (goal.goalComplete &&
+                          goal.state != GoalStates.COMPLETE)
                         DropdownMenuItem(
                           child: Text("Extend"),
                           onTap: () {
                             extendRequest.value = true;
                           },
                         ),
-                      if (rootine.goalComplete &&
-                          rootine.state != GoalStates.COMPLETE)
+                      if (goal.goalComplete &&
+                          goal.state != GoalStates.COMPLETE)
                         DropdownMenuItem(
                           child: Text("Complete"),
                           onTap: () {
                             complete();
                             scope.launch(() async {
-                              await viewModel.updateGoal(rootine);
+                              await viewModel.updateGoal(goal);
                             });
                           },
                         ),
@@ -346,26 +329,26 @@ Widget RootineItem(Rootine rootine) {
                       bottomLeft: Radius.circular(8.0),
                     ),
                   ),
-                  color: rootine.targetBoxColor as Color,
+                  color: goal.targetBoxColor as Color,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("My Progress"),
                       ClickableText(
-                        text: !rootine.time
-                            ? "${rootine.progress.toInt()} ${rootine.units}"
-                            : "${rootine.progress.toTime()}",
+                        text: !goal.time
+                            ? "${goal.progress.toInt()} ${goal.units}"
+                            : "${goal.progress.toTime()}",
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
                         onTap: () {
-                          if (rootine.time) {
+                          if (goal.time) {
                             openDialogTime.value = true;
                           } else {
                             openDialog.value = true;
                           }
                           scope.launch(() async {
-                            await viewModel.updateGoal(rootine);
+                            await viewModel.updateGoal(goal);
                           });
                         },
                       ),
@@ -376,16 +359,16 @@ Widget RootineItem(Rootine rootine) {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0.0),
                   ),
-                  color: rootine.progressBoxColor as Color,
+                  color: goal.progressBoxColor as Color,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("Weekly Target"),
                       Text(
-                        rootine.state == GoalStates.INPROGRESS
-                            ? (!rootine.time
-                            ? "${ceil(rootine.weeklyGoal).toInt()} ${rootine.units}"
-                            : "${rootine.weeklyGoal.toTime()}")
+                        goal.state == GoalStates.INPROGRESS
+                            ? (!goal.time
+                            ? "${ceil(goal.weeklyGoal).toInt()} ${goal.units}"
+                            : "${goal.weeklyGoal.toTime()}")
                             : "---",
                         style: TextStyle(
                           fontSize: 14.0,
@@ -400,24 +383,24 @@ Widget RootineItem(Rootine rootine) {
                       bottomRight: Radius.circular(8.0),
                     ),
                   ),
-                  color: rootine.percentageBoxColor as Color,
+                  color: goal.percentageBoxColor as Color,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircularProgressIndicator(
-                        value: rootine.state != GoalStates.SHELVED &&
-                            !rootine.weeklyPercentage.isNaN()
-                            ? rootine.weeklyPercentage
+                        value: goal.state != GoalStates.SHELVED &&
+                            !goal.weeklyPercentage.isNaN()
+                            ? goal.weeklyPercentage
                             : 0.0,
                         strokeWidth: 20.0,
                         valueColor: AlwaysStoppedAnimation(
-                          rootine.weeklyProgressColor as Color,
+                          goal.weeklyProgressColor as Color,
                         ),
                         radius: 30.0,
                       ),
                       Text(
-                        rootine.state != GoalStates.SHELVED
-                            ? "${(rootine.weeklyPercentage * 100).toInt()}%"
+                        goal.state != GoalStates.SHELVED
+                            ? "${(goal.weeklyPercentage * 100).toInt()}%"
                             : "---",
                         style: TextStyle(
                           fontSize: 14.0,
@@ -431,7 +414,7 @@ Widget RootineItem(Rootine rootine) {
           ),
           AnimatedVisibility(
             visible:
-            rootine.goalComplete && rootine.state != GoalStates.COMPLETE,
+            goal.goalComplete && goal.state != GoalStates.COMPLETE,
             enter: ExpandVertically(),
             exit: ShrinkVertically(),
             child: Row(
@@ -447,7 +430,7 @@ Widget RootineItem(Rootine rootine) {
                   onPressed: () {
                     complete();
                     scope.launch(() async {
-                      await viewModel.updateGoal(rootine);
+                      await viewModel.updateGoal(goal);
                     });
                   },
                   child: Text("Complete"),

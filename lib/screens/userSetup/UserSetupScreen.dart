@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:rootine_flutter_real/navigation/Routes.dart';
 
 class UserSetupScreen extends StatefulWidget {
-  final NavHostController navHostController;
-
-  UserSetupScreen({required this.navHostController});
 
   @override
   _UserSetupScreenState createState() => _UserSetupScreenState();
@@ -17,7 +14,7 @@ class _UserSetupScreenState extends State<UserSetupScreen> {
   DateTime selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(1900),
@@ -26,7 +23,7 @@ class _UserSetupScreenState extends State<UserSetupScreen> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
-        birthdayController.text = DateFormat('MM/dd/yyyy').format(picked);
+        birthdayController.text = picked.toString();
       });
     }
   }
@@ -61,7 +58,7 @@ class _UserSetupScreenState extends State<UserSetupScreen> {
             TextButton(
               onPressed: () {
                 _setUser();
-                widget.navHostController.navigate('/photo');
+                Navigator.pushNamed(context, Routes.photo.route);
               },
               child: Text('Yes'),
             ),

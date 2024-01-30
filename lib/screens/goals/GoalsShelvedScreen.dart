@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rootine_flutter_real/repositories/GoalsManager.dart';
+
+import '../../components/RootineItem.dart';
+
+GoalsManager goalsManager = GoalsManager.goalsManager;
 
 class GoalsShelvedScreen extends StatefulWidget {
   @override
@@ -13,12 +18,12 @@ class _GoalsShelvedScreenState extends State<GoalsShelvedScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: state.shelved.length,
+              itemCount: GoalsManager.shelved.length,
               itemBuilder: (context, index) {
                 return Row(
                   children: [
                     RootineItem(
-                      rootine: state.shelved[index],
+                      GoalsManager.shelved[index],
                     ),
                   ],
                 );
@@ -29,21 +34,4 @@ class _GoalsShelvedScreenState extends State<GoalsShelvedScreen> {
       ),
     );
   }
-}
-
-class RootineItem extends StatelessWidget {
-  final Rootine rootine;
-
-  RootineItem({required this.rootine});
-
-  @override
-  Widget build(BuildContext context) {
-    return // Implement RootineItem widget;
-  }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: GoalsShelvedScreen(),
-  ));
 }

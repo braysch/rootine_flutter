@@ -271,7 +271,7 @@ class HourMinuteField extends StatelessWidget {
             onChanged: (value) {
               // Handle hour input change
             },
-            value: hourInputVariable,
+            //value: hourInputVariable,
             keyboardType: TextInputType.number,
           ),
         ),
@@ -283,7 +283,7 @@ class HourMinuteField extends StatelessWidget {
             onChanged: (value) {
               // Handle minute input change
             },
-            value: minuteInputVariable,
+            //value: minuteInputVariable,
             keyboardType: TextInputType.number,
           ),
         ),

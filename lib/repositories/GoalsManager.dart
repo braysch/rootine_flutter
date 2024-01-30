@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:rootine_flutter_real/repositories/UsersRepository.dart';
 
@@ -85,7 +84,7 @@ class GoalsManager {
   }
 
   Future<void> updateGoal(Goal goal) async {
-    await DataRepository.updateGoal(goal);
+    //await DataRepository.updateGoal(goal);
   }
 
   void calculateDaysUntilEndOfWeek() {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:your_package_name_here/viewmodels/goals_view_model.dart';
-
+import 'package:rootine_flutter_real/repositories/GoalsManager.dart';
+import '../models/goal.dart';
 import '../repositories/DataRepository.dart';
 
-Future<void> deleteOrShelveDialog(BuildContext context, Rootine rootine, ValueNotifier<bool> deleteRequest, CoroutineScope scope, ValueNotifier<bool> transition) async {
-  final viewModel = context.read(goalsViewModelProvider);
+GoalsManager goalsManager = GoalsManager.goalsManager;
+
+Future<void> deleteOrShelveDialog(BuildContext context, Goal goal, ValueNotifier<bool> deleteRequest, ValueNotifier<bool> transition) async {
 
   await showDialog<void>(
     context: context,
@@ -13,7 +13,7 @@ Future<void> deleteOrShelveDialog(BuildContext context, Rootine rootine, ValueNo
       return AlertDialog(
         title: Column(
           children: [
-            Text("${rootine.name}"),
+            Text("${goal.name}"),
             Text(
               "Don't let your dreams be dreams!",
               style: Theme.of(context).textTheme.bodyText2,
@@ -32,8 +32,8 @@ Future<void> deleteOrShelveDialog(BuildContext context, Rootine rootine, ValueNo
           TextButton(
             onPressed: () async {
               deleteRequest.value = false;
-              rootine.shelve();
-              await viewModel.updateGoal(rootine);
+              goal.shelve();
+              await goalsManager.updateGoal(goal);
               Navigator.of(context).pop();
             },
             child: Text('Shelve'),
@@ -42,8 +42,8 @@ Future<void> deleteOrShelveDialog(BuildContext context, Rootine rootine, ValueNo
           TextButton(
             onPressed: () async {
               transition.value = true;
-              rootine.delete();
-              await DataRepository.deleteGoal(rootine.identification.toString());
+              goal.delete();
+              //await goalsManager.deleteGoal(goal.identification.toString());
               deleteRequest.value = false;
               Navigator.of(context).pop();
             },

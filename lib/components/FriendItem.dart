@@ -38,7 +38,7 @@ Widget FriendItem(User user, BuildContext context) {
                     return Row(
                       children: [
                         FriendGoalItem(
-                          rootine: it,
+                          goal: it,
                         ),
                       ],
                     );
