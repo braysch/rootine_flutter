@@ -22,7 +22,7 @@ class _GoalsShelvedScreenState extends State<GoalsShelvedScreen> {
               itemBuilder: (context, index) {
                 return Row(
                   children: [
-                    RootineItem(
+                    GoalItem(
                       GoalsManager.shelved[index],
                     ),
                   ],

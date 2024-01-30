@@ -10,7 +10,7 @@ class GoalsScreen extends StatefulWidget {
   _GoalsScreenState createState() => _GoalsScreenState();
 }
 
-class _GoalsScreenState extends State<GoalsScreen> with SingleTickerProviderStateMixin {
+class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -27,14 +27,21 @@ class _GoalsScreenState extends State<GoalsScreen> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text("Next milestone in ${goalsManager.daysUntilEndOfWeek} days", textAlign: TextAlign.center),
-          Tabs(tabController: _tabController),
-          TabsContent(tabController: _tabController),
-        ],
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Next milestone in ${goalsManager.daysUntilEndOfWeek} days", textAlign: TextAlign.center),
+            Tabs(tabController: _tabController),
+            TabsContent(tabController: _tabController),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {  },
+
+        ),
       ),
     );
   }
@@ -52,22 +59,26 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> {
   @override
   Widget build(BuildContext context) {
-    return TabBar(
-      controller: widget.tabController,
-      tabs: [
-        Tab(
-          text: "Shelved",
-          icon: Icon(Icons.ac_unit),
-        ),
-        Tab(
-          text: "In Progress",
-          icon: Icon(Icons.ac_unit),
-        ),
-        Tab(
-          text: "Completed",
-          icon: Icon(Icons.ac_unit),
-        ),
-      ],
+    return Container(
+      color: Colors.blue, // Set the background color of the tabs
+      child: TabBar(
+        controller: widget.tabController,
+        indicatorColor: Colors.white, // Set the background color of the selected tab
+        tabs: [
+          Tab(
+            text: "Shelved",
+            icon: Icon(Icons.shelves),
+          ),
+          Tab(
+            text: "In Progress",
+            icon: Icon(Icons.pending),
+          ),
+          Tab(
+            text: "Completed",
+            icon: Icon(Icons.done_outline_outlined),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -84,13 +95,15 @@ class TabsContent extends StatefulWidget {
 class _TabsContentState extends State<TabsContent> {
   @override
   Widget build(BuildContext context) {
-    return TabBarView(
-      controller: widget.tabController,
-      children: [
-        GoalsShelvedScreen(),
-        GoalsInProgressScreen(),
-        GoalsCompletedScreen(),
-      ],
+    return Expanded(
+      child: TabBarView(
+        controller: widget.tabController,
+        children: [
+          GoalsShelvedScreen(),
+          GoalsInProgressScreen(),
+          GoalsCompletedScreen(),
+        ],
+      ),
     );
   }
 }
@@ -99,7 +112,8 @@ class GoalsShelvedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Implement GoalsShelvedScreen
-    return Container();
+    return Container(
+    );
   }
 }
 
@@ -107,7 +121,8 @@ class GoalsInProgressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Implement GoalsInProgressScreen
-    return Container();
+    return Container(
+    );
   }
 }
 
@@ -115,6 +130,7 @@ class GoalsCompletedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Implement GoalsCompletedScreen
-    return Container();
+    return Container(
+    );
   }
 }

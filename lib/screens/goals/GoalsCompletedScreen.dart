@@ -21,7 +21,7 @@ class GoalsCompletedScreen {
                 child: Row(
                   children: [
                     Expanded(
-                      child: RootineItem(
+                      child: GoalItem(
                         GoalsManager.completed[index],
                       ),
                     ),

@@ -3,7 +3,7 @@ import 'package:rootine_flutter_real/util/functions.dart';
 import '../models/goal.dart';
 import '../util/GoalStates.dart';
 
-Widget goalItem(Goal goal) {
+Widget GoalItem(Goal goal) {
   var linearProgressOffset = 0.0;
   var openDialog = false;
   var openDialogTime = false;
