@@ -11,7 +11,6 @@ class GoalsInProgressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.red,
         child: Column(
         children: [
           Text("Goals in progress ---> ${goalsManager.inProgress.length}"),

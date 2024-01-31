@@ -16,7 +16,7 @@ class GoalsManager {
   List<Goal> allGoals = [];
   List<Goal> shelved = [];
   List<Goal> completed = [];
-  List<Goal> inProgress = [];
+  List<Goal> inProgress = [Goal("34")];
 
   Future<List<Goal>> getInProgress() async {
     inProgress.clear();

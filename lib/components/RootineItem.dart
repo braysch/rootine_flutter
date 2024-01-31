@@ -204,7 +204,9 @@ Widget GoalItem(Goal goal) {
   // Add the other if conditions similarly...
 
   return Container(
+    margin: EdgeInsets.fromLTRB(8, 8, 8, 0),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
         color: goal.itemColor as Color,
       ),
       padding: EdgeInsets.all(8),
@@ -212,21 +214,26 @@ Widget GoalItem(Goal goal) {
         children: [
           Row(
             children: [
+              Expanded(child:
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        goal.name,
+                        "Practice Accordion",
+                        //goal.name,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          fontSize: 20
                         ),
                         maxLines: 1,
                       ),
+                      SizedBox(width: 4),
                       Icon(
-                          Icons.lock,
-                          size: 16.0,
+                          Icons.visibility_off,
+                          size: 18.0,
                         ),
                     ],
                   ),
@@ -243,17 +250,23 @@ Widget GoalItem(Goal goal) {
                         ],
                       ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 4),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white.withOpacity(0.2),
+                            ),
+                            child:
                           Text(
                             "${(goal.totalPercentage * 100).toInt()}%",
-                            style: TextStyle(
-                              backgroundColor: Colors.white.withOpacity(0.20),
-                            ),
+                          ),
                           ),
                         ],
                       ),
+                      Expanded(child: Container()),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
                             goal.state != GoalStates.SHELVED
@@ -265,6 +278,7 @@ Widget GoalItem(Goal goal) {
                     ],
                   ),
                 ],
+              ),
               ),
               Column(
                 children: [
@@ -310,80 +324,83 @@ Widget GoalItem(Goal goal) {
             value: 3,
           ),
           Container(
-            child: Row(
-              children: [
-                Container(
-                  color: goal.targetBoxColor as Color,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("My Progress"),
-                      Text(
-                        !goal.time
-                            ? "${goal.progress.toInt()} ${goal.units}"
-                            : "${goal.progress}",
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
-                        /*onTap: () {
-                          if (goal.time) {
-                            //openDialogTime.value = true;
-                          } else {
-                            //openDialog.value = true;
-                          }
-                          // updateGoal
-                        },*/
+            child: IntrinsicHeight(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("My Progress"),
+                          Text(
+                            !goal.time
+                                ? "${goal.progress.toInt()} ${goal.units}"
+                                : "${goal.progress}",
+                            style: TextStyle(
+                              fontSize: 40.0,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                Container(
-                  color: goal.progressBoxColor as Color,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Weekly Target"),
-                      Text(
-                        goal.state == GoalStates.INPROGRESS
-                            ? (!goal.time
-                            ? "${(goal.weeklyGoal).toInt().ceil()} ${goal.units}"
-                            : "${goal.weeklyGoal}")
-                            : "---",
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
+                  Expanded(
+                    child: Container(
+                      color: Colors.green,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Weekly Target"),
+                          Text(
+                            goal.state == GoalStates.INPROGRESS
+                                ? (!goal.time
+                                ? "${(goal.weeklyGoal).toInt().ceil()} ${goal.units}"
+                                : "${goal.weeklyGoal}")
+                                : "---",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                Container(
-                  color: goal.percentageBoxColor as Color,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(
-                        value: goal.state != GoalStates.SHELVED &&
-                            !goal.weeklyPercentage.isNaN
-                            ? goal.weeklyPercentage
-                            : 0.0,
-                        strokeWidth: 20.0,
-                        valueColor: AlwaysStoppedAnimation(
-                          goal.weeklyProgressColor as Color,
-                        ),
+                  Expanded(
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              CircularProgressIndicator(
+                                value: .5,
+                                strokeWidth: 20.0,
+                                valueColor: AlwaysStoppedAnimation(
+                                  goal.weeklyProgressColor as Color,
+                                ),
+                              ),
+                              Text(
+                                goal.state != GoalStates.SHELVED
+                                    ? "${(goal.weeklyPercentage * 100).toInt()}%"
+                                    : "---",
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Text(
-                        goal.state != GoalStates.SHELVED
-                            ? "${(goal.weeklyPercentage * 100).toInt()}%"
-                            : "---",
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            )
+
           ),
           Row(
               children: [
@@ -403,7 +420,6 @@ Widget GoalItem(Goal goal) {
                 ),
               ],
             ),
-          SizedBox(height: 8.0),
         ],
       ),
   );
