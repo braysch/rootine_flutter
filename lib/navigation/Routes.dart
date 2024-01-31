@@ -19,6 +19,7 @@ class Routes {
   static final goalsCompleted = Screen("goalscompleted");
   static final profile = Screen("profile");
   static final goals = Screen("goals");
+  static final editGoal = Screen("editGoal");
   static final userSetupNavigation = Screen("userSetupNavigation");
   static final userSetup = Screen("userSetup");
   static final profileNavigation = Screen("profileNavigation");

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rootine_flutter_real/navigation/Routes.dart';
+import 'package:rootine_flutter_real/screens/goals/CreateGoalTitleScreen.dart';
+import 'package:rootine_flutter_real/screens/goals/GoalsInProgressScreen.dart';
+import 'package:rootine_flutter_real/screens/goals/GoalsModificationScreen.dart';
 import 'package:rootine_flutter_real/screens/goals/GoalsScreen.dart';
 
 void main() {
@@ -68,6 +71,9 @@ class RootineTheme extends StatelessWidget {
       ),
         routes: {
           'goals': (context) => GoalsScreen(),
+          //'goals': (context) => GoalsScreen(),
+          'createGoalTitle': (context) => CreateGoalTitleScreen(),
+          'editGoal': (context) => GoalModificationScreen()
         }
     );
   }

@@ -6,7 +6,12 @@ import '../../repositories/GoalsManager.dart';
 
 GoalsManager goalsManager = GoalsManager.goalsManager;
 
-class GoalsCompletedScreen {
+class GoalsCompletedScreen extends StatefulWidget {
+  @override
+  _GoalsCompletedScreenState createState() => _GoalsCompletedScreenState();
+}
+
+class _GoalsCompletedScreenState extends State<GoalsCompletedScreen> {
   @override
   Widget build(BuildContext context) {
 
@@ -14,7 +19,7 @@ class GoalsCompletedScreen {
       children: [
         Expanded(
           child: ListView.builder(
-            itemCount: GoalsManager.completed.length,
+            itemCount: goalsManager.completed.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -22,7 +27,7 @@ class GoalsCompletedScreen {
                   children: [
                     Expanded(
                       child: GoalItem(
-                        GoalsManager.completed[index],
+                        goalsManager.completed[index],
                       ),
                     ),
                   ],

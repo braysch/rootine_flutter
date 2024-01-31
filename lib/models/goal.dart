@@ -10,50 +10,50 @@ class Goal {
   late String userId;
 
   // values
-  late String name;
-  late String units;
-  late double goal;
-  late DateTime endDate;
-  late double initialProgress;
-  late DateTime startDate;
-  late int daysStartDateToEndDate;
-  late double dailyAverage;
-  late int totalWeeks;
-  late double progress;
-  late int currentWeek;
-  late double weeklyStartingPoint;
-  late DateTime endOfWeek;
-  late int daysStartDateToEndOfWeek;
-  late double weeklyGoal;
-  late double weeklyPercentage;
-  late double totalPercentage;
-  late DateTime completionDate;
-  late double newGoal;
-  late bool time;
-  late bool private;
-  late List<String>? motivators;
+  late String name = "";
+  late String units = "";
+  late double goal = 0;
+  late DateTime endDate = DateTime.now();
+  late double initialProgress = 0;
+  late DateTime startDate = DateTime.now();
+  late int daysStartDateToEndDate = 0;
+  late double dailyAverage = 0;
+  late int totalWeeks = 0;
+  late double progress = 0;
+  late int currentWeek = 0;
+  late double weeklyStartingPoint = 0;
+  late DateTime endOfWeek = DateTime.now();
+  late int daysStartDateToEndOfWeek = 0;
+  late double weeklyGoal = 0;
+  late double weeklyPercentage = 0;
+  late double totalPercentage = 0;
+  late DateTime completionDate = DateTime.now();
+  late double newGoal = 0;
+  late bool time = false;
+  late bool private = false;
+  late List<String>? motivators = [];
 
   // states
-  late int state;
+  late int state = 0;
 
-  late bool goalComplete;
+  late bool goalComplete = false;
 
   // colors
-  late Color itemColor;
-  late Color weeklyProgressColor;
-  late Color targetBoxColor;
-  late Color progressBoxColor;
-  late Color percentageBoxColor;
-  late Color totalProgressColor;
+  late Color itemColor = Colors.red;
+  late Color weeklyProgressColor = Colors.red;
+  late Color targetBoxColor = Colors.red;
+  late Color progressBoxColor = Colors.red;
+  late Color percentageBoxColor = Colors.red;
+  late Color totalProgressColor = Colors.red;
 
   // strings
-  late String progressString;
-  late String goalString;
-  late String newGoalString;
-  late String endDateString;
-  late String startDateString;
-  late String initialProgressString;
-  late String errorMessage;
+  late String progressString = "";
+  late String goalString = "";
+  late String newGoalString = "";
+  late String endDateString = "";
+  late String startDateString = "";
+  late String initialProgressString = "";
+  late String errorMessage = "";
 
   // transitions
   late dynamic exitTransition;

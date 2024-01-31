@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rootine_flutter_real/navigation/Routes.dart';
 import 'package:rootine_flutter_real/viewmodels/GoalsViewModel.dart';
 
 import '../../repositories/GoalsManager.dart';
+import 'GoalsCompletedScreen.dart';
+import 'GoalsInProgressScreen.dart';
+import 'GoalsShelvedScreen.dart';
 
 GoalsManager goalsManager = GoalsManager.goalsManager;
 
@@ -39,7 +43,10 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {  },
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.editGoal.route);
+          },
 
         ),
       ),
@@ -71,11 +78,11 @@ class _TabsState extends State<Tabs> {
           ),
           Tab(
             text: "In Progress",
-            icon: Icon(Icons.pending),
+            icon: Icon(Icons.timelapse),
           ),
           Tab(
             text: "Completed",
-            icon: Icon(Icons.done_outline_outlined),
+            icon: Icon(Icons.offline_pin_rounded),
           ),
         ],
       ),
@@ -104,33 +111,6 @@ class _TabsContentState extends State<TabsContent> {
           GoalsCompletedScreen(),
         ],
       ),
-    );
-  }
-}
-
-class GoalsShelvedScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Implement GoalsShelvedScreen
-    return Container(
-    );
-  }
-}
-
-class GoalsInProgressScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Implement GoalsInProgressScreen
-    return Container(
-    );
-  }
-}
-
-class GoalsCompletedScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Implement GoalsCompletedScreen
-    return Container(
     );
   }
 }

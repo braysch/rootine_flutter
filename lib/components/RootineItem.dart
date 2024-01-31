@@ -204,8 +204,9 @@ Widget GoalItem(Goal goal) {
   // Add the other if conditions similarly...
 
   return Container(
-      decoration: BoxDecoration(),
-      color: goal.itemColor as Color,
+      decoration: BoxDecoration(
+        color: goal.itemColor as Color,
+      ),
       padding: EdgeInsets.all(8),
       child: Column(
         children: [

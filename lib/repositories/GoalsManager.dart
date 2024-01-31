@@ -13,12 +13,12 @@ class GoalsManager {
 
   DateTime endOfWeek = DateTime.now();
   int daysUntilEndOfWeek = 0;
-  static List<Goal> allGoals = [];
-  static List<Goal> shelved = [];
-  static List<Goal> completed = [];
-  static List<Goal> inProgress = [];
+  List<Goal> allGoals = [];
+  List<Goal> shelved = [];
+  List<Goal> completed = [];
+  List<Goal> inProgress = [];
 
-  static Future<List<Goal>> getInProgress() async {
+  Future<List<Goal>> getInProgress() async {
     inProgress.clear();
     for (var goal in allGoals) {
       if (goal.state == GoalStates.INPROGRESS) {
@@ -28,7 +28,7 @@ class GoalsManager {
     return inProgress;
   }
 
-  static Future<List<Goal>> getCompleted() async {
+  Future<List<Goal>> getCompleted() async {
     completed.clear();
     for (var goal in allGoals) {
       if (goal.state == GoalStates.COMPLETE) {
@@ -38,7 +38,7 @@ class GoalsManager {
     return completed;
   }
 
-  static Future<List<Goal>> getShelved() async {
+  Future<List<Goal>> getShelved() async {
     shelved.clear();
     for (var goal in allGoals) {
       if (goal.state == GoalStates.SHELVED) {

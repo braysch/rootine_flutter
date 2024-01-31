@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rootine_flutter_real/repositories/GoalsManager.dart';
+
+import '../../models/goal.dart';
 
 class GoalModificationScreen extends StatefulWidget {
   @override
@@ -237,6 +240,10 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
                   // Handle non-time case
                 }
                 // Handle button click
+                Goal goal = Goal("poop");
+                GoalsManager.goalsManager.allGoals.add(goal);
+                GoalsManager.goalsManager.inProgress.add(goal);
+                print("GOALS SIZE: ${GoalsManager.goalsManager.allGoals.length}\n");
               },
               child: Text("Continue"),
             ),

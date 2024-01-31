@@ -10,11 +10,14 @@ class GoalsInProgressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Container(
+        color: Colors.red,
+        child: Column(
         children: [
+          Text("Goals in progress ---> ${goalsManager.inProgress.length}"),
           Expanded(
             child: ListView.builder(
-              itemCount: GoalsManager.inProgress.length,
+              itemCount: goalsManager.inProgress.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -22,8 +25,8 @@ class GoalsInProgressScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: GoalItem(
-                          GoalsManager.inProgress[index],
-                        ),
+                  goalsManager.inProgress[index]
+                  )
                       ),
                     ],
                   ),
@@ -32,6 +35,7 @@ class GoalsInProgressScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

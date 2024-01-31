@@ -18,12 +18,12 @@ class _GoalsShelvedScreenState extends State<GoalsShelvedScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: GoalsManager.shelved.length,
+              itemCount: goalsManager.shelved.length,
               itemBuilder: (context, index) {
                 return Row(
                   children: [
                     GoalItem(
-                      GoalsManager.shelved[index],
+                      goalsManager.shelved[index],
                     ),
                   ],
                 );
