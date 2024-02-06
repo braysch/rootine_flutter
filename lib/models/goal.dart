@@ -83,23 +83,20 @@ class Goal {
   void calculateColors() {
     print("CALCULATE COLORS!");
     if (weeklyPercentage.isNaN || weeklyPercentage < 0) {
-      itemColor = Colors.white;
-      weeklyProgressColor = Colors.white;
-      targetBoxColor = Colors.white;
-      progressBoxColor = Colors.white;
-      percentageBoxColor = Colors.white;
-      totalProgressColor = Colors.white;
+      itemColor = c_item_begin;
+      weeklyProgressColor = c_weekly_progress;
+      targetBoxColor = c_target_box_begin;
+      progressBoxColor = c_progress_box_begin;
+      percentageBoxColor = c_percentage_box_begin;
+      totalProgressColor = c_total_progress_begin;
     } else {
       if (weeklyPercentage < 1) {
-        var colorResult = colorFinder(
-            c_weekly_progress, c_weekly_progress_finished,
-            weeklyPercentage);
-        itemColor = colorResult['color']!;
-        weeklyProgressColor = colorResult['color']!;
-        targetBoxColor = colorResult['color']!;
-        progressBoxColor = Colors.white;
-        percentageBoxColor = colorResult['color']!;
-        totalProgressColor = colorResult['color']!;
+        itemColor = colorFinder(c_item_begin, c_item_end, weeklyPercentage)['color'];
+        weeklyProgressColor = colorFinder(c_weekly_progress, c_weekly_progress_finished, weeklyPercentage)['color'];
+        targetBoxColor = colorFinder(c_target_box_begin, c_target_box_end, weeklyPercentage)['color'];
+        progressBoxColor = colorFinder(c_progress_box_begin, c_progress_box_end, weeklyPercentage)['color'];
+        percentageBoxColor = colorFinder(c_percentage_box_begin, c_percentage_box_end, weeklyPercentage)['color'];
+        totalProgressColor = colorFinder(c_total_progress_begin, c_total_progress_end, weeklyPercentage)['color'];
       } else {
         itemColor = c_item_complete;
         weeklyProgressColor = c_weekly_progress_complete;
@@ -109,19 +106,19 @@ class Goal {
         totalProgressColor = c_total_progress_complete;
       }
       if (goalComplete) {
-        itemColor = Color.fromRGBO(255, 255, 255, 1.0);
-        weeklyProgressColor = Color.fromRGBO(255, 255, 255, 1.0);
-        targetBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
-        progressBoxColor = Colors.red;
-        percentageBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
-        totalProgressColor = Color.fromRGBO(255, 255, 255, 1.0);
+        itemColor = c_item_finished;
+        weeklyProgressColor = c_weekly_progress_finished;
+        targetBoxColor = c_target_box_finished;
+        progressBoxColor = c_progress_box_finished;
+        percentageBoxColor = c_percentage_box_finished;
+        totalProgressColor = c_total_progress_finished;
       }
       if (state == 2) {
-        itemColor = Color.fromRGBO(255, 255, 255, 1.0);
-        targetBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
-        progressBoxColor = Colors.red;
-        percentageBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
-        totalProgressColor = Color.fromRGBO(255, 255, 255, 1.0);
+        itemColor = c_item_shelved;
+        targetBoxColor = c_target_box_shelved;
+        progressBoxColor = c_progress_box_shelved;
+        percentageBoxColor = c_percentage_box_shelved;
+        totalProgressColor = c_total_progress_shelved;
       }
     }
   }

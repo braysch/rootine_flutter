@@ -285,7 +285,7 @@ Widget GoalItem(Goal goal) {
                   IconButton(
                     icon: Icon(Icons.more_vert),
                     onPressed: () {
-                      //showDropdown.value = true;
+                      showDropdown = true;
                     },
                   ),
                   /*DropdownMenu(
@@ -328,7 +328,11 @@ Widget GoalItem(Goal goal) {
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
+                    child: GestureDetector(
+                      onTap: () {
+                        print("TAPPED!");
+                      },
+                  child: Container(
                       color: goal.progressBoxColor,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -344,6 +348,7 @@ Widget GoalItem(Goal goal) {
                           ),
                         ],
                       ),
+                    ),
                     ),
                   ),
                   Expanded(

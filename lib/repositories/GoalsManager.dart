@@ -24,7 +24,7 @@ class GoalsManager {
     goal.startDate = (DateTime.now().subtract(Duration(days: 7)));
     goal.endDate = (DateTime.now()).add(Duration(days: 7*4));
     goal.goal = 100;
-    goal.progress = 39;
+    goal.progress = 22;
     goal.state = GoalStates.INPROGRESS;
     goal.calculateValues();
     goal.calculateColors();
