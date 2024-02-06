@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../ui.theme/Color.dart';
 import '../util/functions.dart';
 
 class Goal {
@@ -80,44 +81,45 @@ class Goal {
   }
 
   void calculateColors() {
+    print("CALCULATE COLORS!");
     if (weeklyPercentage.isNaN || weeklyPercentage < 0) {
-      itemColor = Colors.red;
-      weeklyProgressColor = Colors.red;
-      targetBoxColor = Colors.red;
-      progressBoxColor = Colors.red;
-      percentageBoxColor = Colors.red;
-      totalProgressColor = Colors.red;
+      itemColor = Colors.white;
+      weeklyProgressColor = Colors.white;
+      targetBoxColor = Colors.white;
+      progressBoxColor = Colors.white;
+      percentageBoxColor = Colors.white;
+      totalProgressColor = Colors.white;
     } else {
       if (weeklyPercentage < 1) {
         var colorResult = colorFinder(
-            Color.fromRGBO(0, 0, 0, 1.0), Color.fromRGBO(255, 255, 255, 1.0),
+            c_weekly_progress, c_weekly_progress_finished,
             weeklyPercentage);
         itemColor = colorResult['color']!;
-        weeklyProgressColor = Color.fromRGBO(255, 255, 255, 1.0);
+        weeklyProgressColor = colorResult['color']!;
         targetBoxColor = colorResult['color']!;
-        progressBoxColor = colorResult['color']!;
+        progressBoxColor = Colors.white;
         percentageBoxColor = colorResult['color']!;
         totalProgressColor = colorResult['color']!;
       } else {
-        itemColor = Color.fromRGBO(255, 255, 255, 1.0);
-        weeklyProgressColor = Color.fromRGBO(255, 255, 255, 1.0);
-        targetBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
-        progressBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
-        percentageBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
-        totalProgressColor = Color.fromRGBO(255, 255, 255, 1.0);
+        itemColor = c_item_complete;
+        weeklyProgressColor = c_weekly_progress_complete;
+        targetBoxColor = c_target_box_complete;
+        progressBoxColor = c_progress_box_complete;
+        percentageBoxColor = c_percentage_box_complete;
+        totalProgressColor = c_total_progress_complete;
       }
       if (goalComplete) {
         itemColor = Color.fromRGBO(255, 255, 255, 1.0);
         weeklyProgressColor = Color.fromRGBO(255, 255, 255, 1.0);
         targetBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
-        progressBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
+        progressBoxColor = Colors.red;
         percentageBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
         totalProgressColor = Color.fromRGBO(255, 255, 255, 1.0);
       }
       if (state == 2) {
         itemColor = Color.fromRGBO(255, 255, 255, 1.0);
         targetBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
-        progressBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
+        progressBoxColor = Colors.red;
         percentageBoxColor = Color.fromRGBO(255, 255, 255, 1.0);
         totalProgressColor = Color.fromRGBO(255, 255, 255, 1.0);
       }
@@ -219,8 +221,13 @@ class Goal {
 
   void calculateValues() {
     currentWeek = getWeeks(startDate, DateTime.now());
+    print("current_week:$currentWeek");
     totalWeeks = getWeeks(startDate, endDate);
+    print("total_weeks:$totalWeeks");
     totalPercentage = progress / goal;
+    print("progress:$progress");
+    print("goal:$goal");
+    print("total_percentage (progress/goal):$totalPercentage");
     daysStartDateToEndDate = endDate.difference(startDate).inDays;
     dailyAverage = (goal - initialProgress) / daysStartDateToEndDate;
     endOfWeek = getEndOfWeek(DateTime.now());
@@ -278,9 +285,15 @@ class Goal {
   }
 
   int getWeeks(DateTime start, DateTime end) {
+    print("start:$start");
+    print("end:$end");
     var firstEndOfWeek = getFirstEndOfWeek(start);
-    var w = ((firstEndOfWeek.difference(end).inDays) / 7).ceil();
+    print("first end of week:$firstEndOfWeek");
+    print("diff: ${firstEndOfWeek.difference(end).inDays} days");
+    var w = ((end.difference(firstEndOfWeek).inDays) / 7).ceil();
+    print("w:$w");
     if (start != firstEndOfWeek) w += 1;
+    print("w:$w");
     return w.toInt();
   }
 

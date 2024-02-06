@@ -16,7 +16,20 @@ class GoalsManager {
   List<Goal> allGoals = [];
   List<Goal> shelved = [];
   List<Goal> completed = [];
-  List<Goal> inProgress = [Goal("34")];
+  List<Goal> inProgress = [];
+
+  void initializeGoals()
+  {
+    Goal goal = Goal("POOP");
+    goal.startDate = (DateTime.now().subtract(Duration(days: 7)));
+    goal.endDate = (DateTime.now()).add(Duration(days: 7*4));
+    goal.goal = 100;
+    goal.progress = 39;
+    goal.state = GoalStates.INPROGRESS;
+    goal.calculateValues();
+    goal.calculateColors();
+    inProgress.add(goal);
+  }
 
   Future<List<Goal>> getInProgress() async {
     inProgress.clear();

@@ -329,7 +329,7 @@ Widget GoalItem(Goal goal) {
                 children: [
                   Expanded(
                     child: Container(
-                      color: Colors.white,
+                      color: goal.progressBoxColor,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -348,7 +348,7 @@ Widget GoalItem(Goal goal) {
                   ),
                   Expanded(
                     child: Container(
-                      color: Colors.green,
+                      color: goal.targetBoxColor,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -377,7 +377,7 @@ Widget GoalItem(Goal goal) {
                             alignment: Alignment.center,
                             children: [
                               CircularProgressIndicator(
-                                value: .5,
+                                value: goal.weeklyPercentage,
                                 strokeWidth: 20.0,
                                 valueColor: AlwaysStoppedAnimation(
                                   goal.weeklyProgressColor as Color,
@@ -443,19 +443,14 @@ String toTime(double value) {
 
 Widget totalTargetLinearProgressBar(double totalPercentage) {
   final imageSize = 16.0;
-  final size = 1;/*useAnimatedFloatAsState(
-    targetValue: totalPercentage,
-    duration: 1000,
-    delay: 200,
-    easing: Curves.linearToEaseOut,
-  );*/
+  final size = 1;
 
   return Column(
     children: [
       Row(
         children: [
           Spacer(
-            //flex: size.value > 0 ? size.value.toInt() : 0,
+            flex: size > 0 ? size : 0,
           ),
           Row(
             children: [
@@ -463,6 +458,7 @@ Widget totalTargetLinearProgressBar(double totalPercentage) {
                 width: 16.0,
                 child: Icon(
                   Icons.arrow_forward,
+                  color: Colors.white,
                   // Replace with your icon
                   size: imageSize,
                 ),
@@ -470,7 +466,7 @@ Widget totalTargetLinearProgressBar(double totalPercentage) {
             ],
           ),
           Spacer(
-            //flex: size.value < 1.0 ? (1.0 - size.value).toInt() : 0,
+            flex: size < 1.0 ? (1.0 - size).toInt() : 0,
           ),
         ],
       ),

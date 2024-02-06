@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rootine_flutter_real/navigation/Routes.dart';
+import 'package:rootine_flutter_real/repositories/GoalsManager.dart';
 import 'package:rootine_flutter_real/screens/goals/CreateGoalTitleScreen.dart';
 import 'package:rootine_flutter_real/screens/goals/GoalsInProgressScreen.dart';
 import 'package:rootine_flutter_real/screens/goals/GoalsModificationScreen.dart';
@@ -45,6 +46,7 @@ class LaunchScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
+            GoalsManager.goalsManager.initializeGoals();
             Navigator.pushNamed(context, Routes.goals.route);
           },
           child: Text('Next Screen'),
