@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rootine_flutter_real/repositories/GoalsManager.dart';
 
 import '../../models/goal.dart';
+import '../../util/GoalStates.dart';
 
 class GoalModificationScreen extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class GoalModificationScreen extends StatefulWidget {
 
 class _GoalModificationScreenState extends State<GoalModificationScreen> {
   var name = "";
-  var goal = "";
+  var target = "";
   var units = "";
   var initialProgress = "0";
   var endDate = "";
@@ -18,10 +19,10 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
   var errorMessage = "ERROR MESSAGE";
   var time = true;
   var customUnits = false;
-  var selectedHour = 0;
-  var selectedMinute = 0;
-  var selectedInitialHour = 0;
-  var selectedInitialMinute = 0;
+  var selectedHour = "5";
+  var selectedMinute = "30";
+  var selectedInitialHour = "0";
+  var selectedInitialMinute = "0";
   var private = false;
   var scratch = false;
   var advanced = false;
@@ -71,7 +72,7 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
                     child: TextField(
                       onChanged: (value) {
                         setState(() {
-                          goal = value;
+                          target = value;
                         });
                       },
                       keyboardType: TextInputType.number,
@@ -96,8 +97,8 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
                 children: [
                   Text("Time Target $selectedHour:$selectedMinute"),
                   HourMinuteField(
-                    hourInputVariable: inputWeeklyAverageHour,
-                    minuteInputVariable: inputWeeklyAverageMinute,
+                    hourInputVariable: selectedHour,
+                    minuteInputVariable: selectedMinute,
                     onFieldChange: () {
                       // Handle field change
                     },
@@ -148,8 +149,8 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
                       children: [
                         Text("Initial Progress $selectedInitialHour:$selectedInitialMinute"),
                         HourMinuteField(
-                          hourInputVariable: inputWeeklyAverageHour,
-                          minuteInputVariable: inputWeeklyAverageMinute,
+                          hourInputVariable: selectedInitialHour,
+                          minuteInputVariable: selectedInitialMinute,
                           onFieldChange: () {
                             // Handle field change
                           },
@@ -240,7 +241,30 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
                   // Handle non-time case
                 }
                 // Handle button click
-                Goal goal = Goal("poop");
+                Goal goal = Goal("123");
+                goal.name = name;
+                if (time)
+                  {
+                    goal.goal = double.tryParse(selectedHour) ?? 0.0;
+                    goal.goal += (double.tryParse(selectedMinute) ?? 0.0) / 60.0;
+                    goal.initialProgress = double.tryParse(selectedInitialHour) ?? 0.0;
+                    goal.initialProgress += (double.tryParse(selectedInitialMinute) ?? 0.0) / 60.0;
+                  }
+                else
+                  {
+                    goal.goal = double.tryParse(target) ?? 0.0;
+                    goal.initialProgress = double.tryParse(initialProgress) ?? 0.0;
+                  }
+                goal.units = units;
+                goal.private = private;
+                goal.progress = goal.initialProgress;
+                goal.startDate = DateTime.now();
+                goal.endDate = DateTime.now().add(Duration(days: 28));
+                goal.state = GoalStates.INPROGRESS;
+                goal.time = time;
+                goal.calculateValues();
+                goal.calculateColors();
+                goal.milestoneUpdate();
                 GoalsManager.goalsManager.allGoals.add(goal);
                 GoalsManager.goalsManager.inProgress.add(goal);
                 print("GOALS SIZE: ${GoalsManager.goalsManager.allGoals.length}\n");
@@ -256,8 +280,8 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
 }
 
 class HourMinuteField extends StatelessWidget {
-  final String hourInputVariable;
-  final String minuteInputVariable;
+  String hourInputVariable;
+  String minuteInputVariable;
   final Function() onFieldChange;
   final Function() onUnfocused;
 
@@ -276,7 +300,6 @@ class HourMinuteField extends StatelessWidget {
         Expanded(
           child: TextField(
             onChanged: (value) {
-              // Handle hour input change
             },
             //value: hourInputVariable,
             keyboardType: TextInputType.number,
@@ -288,7 +311,7 @@ class HourMinuteField extends StatelessWidget {
         Expanded(
           child: TextField(
             onChanged: (value) {
-              // Handle minute input change
+              minuteInputVariable = value;
             },
             //value: minuteInputVariable,
             keyboardType: TextInputType.number,

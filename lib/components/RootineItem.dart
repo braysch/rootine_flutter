@@ -77,12 +77,12 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(8, 8, 8, 0),
+      margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: widget.goal.itemColor as Color,
       ),
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
       child: Column(
         children: [
           Row(
@@ -102,7 +102,28 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
                           ),
                           maxLines: 1,
                         ),
+                        Spacer(),
+                        Icon(
+                          Icons.warning,
+                          size: 18.0,
+                        ),
+                        SizedBox(width: 8),
+                        Icon(
+                          Icons.timer,
+                          size: 18.0,
+                        ),
+                        SizedBox(width: 8),
+                        Icon(
+                          Icons.electric_bolt,
+                          size: 18.0,
+                        ),
+                        SizedBox(width: 8),
+                        Icon(
+                          Icons.visibility_off,
+                          size: 18.0,
+                        ),
                       ],
+
                     ),
                     Row(
                       children: [
@@ -113,8 +134,7 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
                               !widget.goal.time
                                   ? "${widget.goal.progress.toInt()} / ${widget
                                   .goal.goal.toInt()} ${widget.goal.units}"
-                                  : "${widget.goal.progress} / ${widget.goal
-                                  .goal} ${widget.goal.units}",
+                                  : "${convertToTime(widget.goal.progress)} / ${convertToTime(widget.goal.goal)}",
                             ),
                           ],
                         ),
@@ -154,10 +174,6 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
               ),
               Column(
                 children: [
-                  Icon(
-                    Icons.visibility_off,
-                    size: 18.0,
-                  ),
                   PopupMenuButton<int>(
                     icon: Icon(Icons.more_vert),
                     onSelected: (int value) {
@@ -257,9 +273,9 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
                                 !widget.goal.time
                                     ? "${widget.goal.progress.toInt()} ${widget
                                     .goal.units}"
-                                    : "${widget.goal.progress}",
+                                    : convertToTime(widget.goal.progress),
                                 style: TextStyle(
-                                  fontSize: 40.0,
+                                  fontSize: 30.0,
                                 ),
                               ),
                             ],
@@ -292,6 +308,7 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
                     ),
                     Expanded(
                       child: Container(
+                        padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(12)),
@@ -404,5 +421,12 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
         ),
       ],
     );
+  }
+
+  String convertToTime(double progress) {
+    int h = progress.toInt();
+    int m = (60*((progress)-(progress.toInt()))).toInt();
+
+    return m == 0 ? "${h}h" : "${h}h ${m}m";
   }
 }
