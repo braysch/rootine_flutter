@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import '../models/goal.dart';
 import '../util/GoalStates.dart';
@@ -12,7 +14,7 @@ class GoalItem extends StatefulWidget {
   _GoalItemState createState() => _GoalItemState();
 }
 
-class _GoalItemState extends State<GoalItem> {
+class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin {
   late bool showDropdown;
   late String newGoal;
   late String progress;
@@ -25,6 +27,9 @@ class _GoalItemState extends State<GoalItem> {
   late bool extendRequest;
   late bool renewRequest;
   late bool transition;
+  late AnimationController _animationController;
+  late double _oldWeeklyPercentage;
+  late double _oldTotalPercentage;
 
   @override
   void initState() {
@@ -41,6 +46,12 @@ class _GoalItemState extends State<GoalItem> {
     extendRequest = false;
     renewRequest = false;
     transition = false;
+    _oldWeeklyPercentage = widget.goal.weeklyPercentage;
+    _oldTotalPercentage = widget.goal.totalPercentage;
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    )..addListener(() { setState(() { }); });
   }
 
   void renew() async {
@@ -90,11 +101,6 @@ class _GoalItemState extends State<GoalItem> {
                             fontSize: 20,
                           ),
                           maxLines: 1,
-                        ),
-                        SizedBox(width: 4),
-                        Icon(
-                          Icons.visibility_off,
-                          size: 18.0,
                         ),
                       ],
                     ),
@@ -148,6 +154,10 @@ class _GoalItemState extends State<GoalItem> {
               ),
               Column(
                 children: [
+                  Icon(
+                    Icons.visibility_off,
+                    size: 18.0,
+                  ),
                   PopupMenuButton<int>(
                     icon: Icon(Icons.more_vert),
                     onSelected: (int value) {
@@ -176,7 +186,7 @@ class _GoalItemState extends State<GoalItem> {
                         value: 0,
                         child: Text('Edit'),
                       ),
-                      const PopupMenuItem<int>(
+                      if ((widget.goal.progress - widget.goal.initialProgress) < ((widget.goal.weeklyGoal - widget.goal.initialProgress) / 2.0)) const PopupMenuItem<int>(
                         value: 1,
                         child: Text('Renew'),
                       ),
@@ -200,9 +210,15 @@ class _GoalItemState extends State<GoalItem> {
               ),
             ],
           ),
-          LinearProgressIndicator(
-            value: 3,
-          ),
+          TweenAnimationBuilder(
+              tween: Tween<double>(begin: _oldTotalPercentage, end: widget.goal.totalPercentage),
+              curve: Curves.easeInOut,
+              duration: Duration(milliseconds: 1000),
+              builder: (context, value, _) => LinearProgressIndicator(
+                value: value,
+                color: widget.goal.totalProgressColor,
+                minHeight: 6,
+              ),),
           Container(
               child: IntrinsicHeight(
                 child: Row(
@@ -217,7 +233,9 @@ class _GoalItemState extends State<GoalItem> {
                                 goal: widget.goal,
                                 updateGoal: (progress) {
                                   setState(() {
+                                    _oldTotalPercentage = widget.goal.progress;
                                     widget.goal.progress = progress;
+                                    _oldWeeklyPercentage = widget.goal.weeklyPercentage;
                                     widget.goal.progressUpdate();
                                   });
                                 }, // units for progress
@@ -285,13 +303,17 @@ class _GoalItemState extends State<GoalItem> {
                             Stack(
                               alignment: Alignment.center,
                               children: [
-                                CircularProgressIndicator(
-                                  value: widget.goal.weeklyPercentage,
-                                  strokeWidth: 20.0,
-                                  valueColor: AlwaysStoppedAnimation(
-                                    widget.goal.itemColor as Color,
-                                  ),
-                                ),
+                                TweenAnimationBuilder(
+                                  tween: Tween<double>(begin: _oldWeeklyPercentage, end: widget.goal.weeklyPercentage),
+                                  curve: Curves.easeInOut,
+                                  duration: Duration(milliseconds: 1000),
+                                  builder: (context, value, _) => CircularProgressIndicator(
+                                    value: value,
+                                    strokeWidth: 15.0,
+                                    valueColor: AlwaysStoppedAnimation(
+                                      widget.goal.itemColor as Color,
+                                    ),
+                                  )),
                                 Text(
                                   widget.goal.state != GoalStates.SHELVED
                                       ? "${(widget.goal.weeklyPercentage * 100)
