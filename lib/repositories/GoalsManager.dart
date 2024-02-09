@@ -21,6 +21,7 @@ class GoalsManager {
   void initializeGoals()
   {
     Goal goal = Goal("POOP");
+    goal.name = "Practice Accordion";
     goal.startDate = (DateTime.now().subtract(Duration(days: 7)));
     goal.endDate = (DateTime.now()).add(Duration(days: 7*4));
     goal.goal = 100;

@@ -24,7 +24,7 @@ class GoalsInProgressScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: GoalItem(
-                  goalsManager.inProgress[index]
+                  goal: goalsManager.inProgress[index]
                   )
                       ),
                     ],

@@ -27,7 +27,7 @@ class _GoalsCompletedScreenState extends State<GoalsCompletedScreen> {
                   children: [
                     Expanded(
                       child: GoalItem(
-                        goalsManager.completed[index],
+                        goal: goalsManager.completed[index],
                       ),
                     ),
                   ],
