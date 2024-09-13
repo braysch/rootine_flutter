@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rootine_flutter_real/screens/root.dart';
 
 import '../../screens/goals/GoalsModificationScreen.dart';
 import '../../screens/goals/GoalsScreen.dart';
@@ -41,6 +42,8 @@ class BottomNavGraph extends StatelessWidget {
         return ProjectsScreen();
       case '/goalModification':
         return GoalModificationScreen();
+      case '/root':
+        return RootScreen();
       default:
         return Container(); // Replace with your default screen
     }

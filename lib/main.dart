@@ -5,6 +5,7 @@ import 'package:rootine_flutter_real/screens/goals/CreateGoalTitleScreen.dart';
 import 'package:rootine_flutter_real/screens/goals/GoalsInProgressScreen.dart';
 import 'package:rootine_flutter_real/screens/goals/GoalsModificationScreen.dart';
 import 'package:rootine_flutter_real/screens/goals/GoalsScreen.dart';
+import 'package:rootine_flutter_real/screens/root.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,7 +32,7 @@ class MyHomePage extends StatelessWidget {
 class RootNavigationGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LaunchScreen();
+    return RootScreen();
     // Replace 'LaunchScreen' with the appropriate starting screen/widget in your Flutter app
   }
 }
@@ -47,7 +48,7 @@ class LaunchScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             GoalsManager.goalsManager.initializeGoals();
-            Navigator.pushNamed(context, Routes.goals.route);
+            Navigator.pushNamed(context, Routes.root.route);
           },
           child: Text('Next Screen'),
         ),

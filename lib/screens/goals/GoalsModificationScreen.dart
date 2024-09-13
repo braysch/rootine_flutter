@@ -40,7 +40,7 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("New Goal!", style: Theme.of(context).textTheme.headline6),
+            Text("New Goal!"),
             Text("What are you going to accomplish?"),
             TextField(
               onChanged: (value) {
