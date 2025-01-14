@@ -37,7 +37,6 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Next milestone in ${goalsManager.daysUntilEndOfWeek} days", textAlign: TextAlign.center),
             Tabs(tabController: _tabController),
             TabsContent(tabController: _tabController),
           ],

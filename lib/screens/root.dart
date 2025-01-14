@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rootine_flutter_real/screens/goals/GoalsScreen.dart';
 
 class RootScreen extends StatefulWidget {
   @override
@@ -119,7 +120,8 @@ class _RootScreenState extends State<RootScreen> {
         ),
       ),
       body: Center(
-        child: Text('Root Screen Content'), // Main content goes here
+        child: GoalsScreen()
+        //child: Text('Root Screen Content'), // Main content goes here
       ),
     );
   }

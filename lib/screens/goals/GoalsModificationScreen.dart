@@ -19,8 +19,8 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
   var errorMessage = "ERROR MESSAGE";
   var time = true;
   var customUnits = false;
-  var selectedHour = "5";
-  var selectedMinute = "30";
+  var selectedHour = "1";
+  var selectedMinute = "45";
   var selectedInitialHour = "0";
   var selectedInitialMinute = "0";
   var private = false;
@@ -97,10 +97,11 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
                 children: [
                   Text("Time Target $selectedHour:$selectedMinute"),
                   HourMinuteField(
-                    hourInputVariable: selectedHour,
-                    minuteInputVariable: selectedMinute,
-                    onFieldChange: () {
-                      // Handle field change
+                    onHourChanged: (hour) {
+                      selectedHour = hour;
+                    },
+                    onMinuteChanged: (minute) {
+                      selectedMinute = minute;
                     },
                     onUnfocused: () {
                       // Handle field unfocused
@@ -149,11 +150,8 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
                       children: [
                         Text("Initial Progress $selectedInitialHour:$selectedInitialMinute"),
                         HourMinuteField(
-                          hourInputVariable: selectedInitialHour,
-                          minuteInputVariable: selectedInitialMinute,
-                          onFieldChange: () {
-                            // Handle field change
-                          },
+                          onHourChanged: (hour) { selectedInitialHour = hour; },
+                          onMinuteChanged: (minute) { selectedInitialMinute = minute; },
                           onUnfocused: () {
                             // Handle field unfocused
                           },
@@ -280,16 +278,14 @@ class _GoalModificationScreenState extends State<GoalModificationScreen> {
 }
 
 class HourMinuteField extends StatelessWidget {
-  String hourInputVariable;
-  String minuteInputVariable;
-  final Function() onFieldChange;
+  final Function(String hour) onHourChanged;
+  final Function(String minute) onMinuteChanged;
   final Function() onUnfocused;
 
   HourMinuteField({
-    required this.hourInputVariable,
-    required this.minuteInputVariable,
-    required this.onFieldChange,
-    required this.onUnfocused,
+    required this.onHourChanged,
+    required this.onMinuteChanged,
+    required this.onUnfocused
   });
 
   @override
@@ -300,8 +296,8 @@ class HourMinuteField extends StatelessWidget {
         Expanded(
           child: TextField(
             onChanged: (value) {
+              onHourChanged(value);
             },
-            //value: hourInputVariable,
             keyboardType: TextInputType.number,
           ),
         ),
@@ -311,7 +307,7 @@ class HourMinuteField extends StatelessWidget {
         Expanded(
           child: TextField(
             onChanged: (value) {
-              minuteInputVariable = value;
+              onMinuteChanged(value);
             },
             //value: minuteInputVariable,
             keyboardType: TextInputType.number,

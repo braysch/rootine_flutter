@@ -230,7 +230,6 @@ class Goal {
     endOfWeek = getEndOfWeek(DateTime.now());
     daysStartDateToEndOfWeek = endOfWeek.difference(startDate).inDays;
     weeklyGoal = (dailyAverage * daysStartDateToEndOfWeek + initialProgress);
-    weeklyGoal = (time ? (weeklyGoal / 60).round() : weeklyGoal.ceilToDouble()).toDouble();
     weeklyPercentage = (progress - weeklyStartingPoint) /
         (weeklyGoal - weeklyStartingPoint);
     if (weeklyPercentage > 9.99) weeklyPercentage = 9.99;

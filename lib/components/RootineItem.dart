@@ -271,8 +271,7 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
                               Text("My Progress"),
                               Text(
                                 !widget.goal.time
-                                    ? "${widget.goal.progress.toInt()} ${widget
-                                    .goal.units}"
+                                    ? "${widget.goal.progress.toInt()} ${widget.goal.units}"
                                     : convertToTime(widget.goal.progress),
                                 style: TextStyle(
                                   fontSize: 30.0,
@@ -294,9 +293,8 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
                               widget.goal.state == GoalStates.INPROGRESS
                                   ? (!widget.goal.time
                                   ? "${(widget.goal.weeklyGoal)
-                                  .toInt()
-                                  .ceil()} ${widget.goal.units}"
-                                  : "${widget.goal.weeklyGoal}")
+                                  .toInt().ceil()} ${widget.goal.units}"
+                                  : convertToTime(widget.goal.weeklyGoal))
                                   : "---",
                               style: TextStyle(
                                 fontSize: 14.0,
@@ -325,7 +323,7 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
                                   curve: Curves.easeInOut,
                                   duration: Duration(milliseconds: 1000),
                                   builder: (context, value, _) => CircularProgressIndicator(
-                                    value: value,
+                                    value: value.isNaN ? 0 : value.isInfinite ? 100 : value,
                                     strokeWidth: 15.0,
                                     valueColor: AlwaysStoppedAnimation(
                                       widget.goal.itemColor as Color,
@@ -333,8 +331,9 @@ class _GoalItemState extends State<GoalItem> with SingleTickerProviderStateMixin
                                   )),
                                 Text(
                                   widget.goal.state != GoalStates.SHELVED
-                                      ? "${(widget.goal.weeklyPercentage * 100)
-                                      .toInt()}%"
+                                      ? "${(widget.goal.weeklyPercentage.isNaN || widget.goal.weeklyPercentage.isInfinite)
+                                      ? (widget.goal.weeklyPercentage.isInfinite ? 100 : 0)
+                                      : (widget.goal.weeklyPercentage * 100).toInt()}%"
                                       : "---",
                                   style: TextStyle(
                                     fontSize: 14.0,
